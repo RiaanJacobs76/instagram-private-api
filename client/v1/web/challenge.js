@@ -186,11 +186,15 @@ Challenge.prototype.code = function(code){
                 throw new TypeError('Invalid response. JSON expected');
             }
             if(response.statusCode === 200 && json.status==='ok' && (json.action==='close' || json.location==='instagram://checkpoint/dismiss')) return true;
-            throw new Exceptions.NotPossibleToResolveChallenge('Unknown error',Exceptions.NotPossibleToResolveChallenge.CODE.UNKNOWN)
+            //throw new Exceptions.NotPossibleToResolveChallenge('Unknown error',Exceptions.NotPossibleToResolveChallenge.CODE.UNKNOWN)
+			return "500";
         })
         .catch(errors.StatusCodeError, function(error) {
-            if(error.statusCode === 400)throw new Exceptions.NotPossibleToResolveChallenge("Verification has not been accepted",Exceptions.NotPossibleToResolveChallenge.CODE.NOT_ACCEPTED);
-            throw error;
+            //if(error.statusCode === 400)throw new Exceptions.NotPossibleToResolveChallenge("Verification has not been accepted",Exceptions.NotPossibleToResolveChallenge.CODE.NOT_ACCEPTED);
+            //throw error;
+			if(error.statusCode == 400) {
+				return error;
+			}
         })
 }
 exports.Challenge = Challenge;
